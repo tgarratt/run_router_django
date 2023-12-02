@@ -3,5 +3,5 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     email = models.EmailField(null=True, blank=True)
-    icon = models.IntegerField(null=True, blank=True, default=1)
+    icon = models.IntegerField(blank=True, default=1)
     # Add other custom fields as needed
