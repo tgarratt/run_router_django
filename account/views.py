@@ -164,6 +164,8 @@ def ValidateResetToken(request):
         now = timezone.now()
         if now - user.reset_token_created_at <= timedelta(minutes=15):
             return JsonResponse({'isTokenValid': True}, status=200)
+        
+        return JsonResponse({'isTokenValid': False}, status=200)
 
     except Exception as e:
         return JsonResponse({'isTokenValid': False}, status=200)
