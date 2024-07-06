@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from run_router.views import RunRouter
-from account.views import Account, LogOutUser, LogInUser, SignUpUser, UpdateUserInfo, SendResetEmail, ValidateResetToken, updateUserPassword, oauth2callback
+from account.views import Account, LogOutUser, LogInUser, SignUpUser, UpdateUserInfo, SendResetEmail, ValidateResetToken, updateUserPassword, oauth2callback, DeleteAccount
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/logout', LogOutUser),
     path('api/signup', SignUpUser),
     path('api/update-account', UpdateUserInfo),
+    path('api/delete-account', DeleteAccount),
     path('api/password-reset-email', SendResetEmail),
     path('api/validate-token', ValidateResetToken),
     path('api/password-reset-confirm', updateUserPassword),

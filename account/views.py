@@ -194,4 +194,14 @@ def updateUserPassword(request):
         
     except Exception as e:
         return JsonResponse({'message': 'There has been an error, please try again'}, status=500)
+
+
+def DeleteAccount(request):
+    try:
+        user = request.user
+        user.delete()
+        return HttpResponse({'account deleted'}, content_type='application/json')
+        
+    except Exception as e:
+        return HttpResponse({'something went wrong'}, content_type='application/json')
     
