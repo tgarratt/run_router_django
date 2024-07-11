@@ -12,22 +12,35 @@ import os
 import uuid
 import json
 
-from account.models import CustomUser
+from account.models import CustomUser, ProfileIcon
 
 
 
 def Account(request):
+    user = request.user
     csrf_token = get_token(request)
-    user_authenticated = getattr(request.user, 'is_authenticated', None)
-    username = getattr(request.user, 'username', None)
-    email = getattr(request.user, 'email', None)
+    user_authenticated = getattr(user, 'is_authenticated', None)
+    username = getattr(user, 'username', None)
+    email = getattr(user, 'email', None)
+    icon = getattr(user, 'profile_icon', None)
 
     return JsonResponse({
         'token': csrf_token,
         'authenticated': user_authenticated,
         'username': username,
-        'email': email
+        'email': email,
+        'icon': icon.source if icon else None
         }, content_type='application/json')
+
+
+def Icons(request):
+    icons = ProfileIcon.objects.all()
+
+    # Serialize the data
+    icons_list = list(icons.values('id', 'source'))
+
+    # Return as JSON response
+    return JsonResponse({'icons': icons_list}, content_type='application/json')
 
 
 def LogInUser(request):
@@ -55,18 +68,20 @@ def LogOutUser(request):
 def SignUpUser(request):
     data = json.loads(request.body.decode('utf-8'))
 
+    icon = ProfileIcon.objects.get(pk=data.get('icon'))
+
     user = CustomUser.objects.create(
         username=data.get('username'),
         email=data.get('email'),
         password=make_password(data.get('password')),
-        icon=data.get('icon'),
+        profile_icon=icon,
     )
-
+ 
     if user is not None:
         auth.login(request, user)
         return JsonResponse({'message': 'Signup successful'}, status=201)
-    else:
-       return JsonResponse({'error': 'Signup unsuccessful'}, status=400)
+    else: 
+        return JsonResponse({'error': 'Signup unsuccessful'}, status=400)
 
 
 def UpdateUserInfo(request):
@@ -92,7 +107,8 @@ def UpdateUserInfo(request):
 
     if icon:
         user = request.user
-        user.icon = icon
+        icon = ProfileIcon.objects.get(pk=data.get('icon'))
+        user.profile_icon = icon
         user.save()
 
         return JsonResponse({'success': 'Profile icon updated successfully'})
