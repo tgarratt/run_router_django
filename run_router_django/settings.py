@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'account',
-    'run_router'
+    'run_router',
+    'saved_routes',
 ]
 
 MIDDLEWARE = [

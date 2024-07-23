@@ -18,20 +18,31 @@ from django.contrib import admin
 from django.urls import path, include
 from run_router.views import RunRouter
 from account.views import Account, LogOutUser, LogInUser, SignUpUser, UpdateUserInfo, SendResetEmail, ValidateResetToken, updateUserPassword, oauth2callback, DeleteAccount, Icons
-
+from saved_routes.views import SaveRoute, SavedRoutes, FavoriteRoute, DeleteRoute, EditRoute
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('api/route-data', RunRouter),
+
     path('api/account', Account),
     path('api/login', LogInUser),
     path('api/logout', LogOutUser),
     path('api/signup', SignUpUser),
+
     path('api/icons', Icons),
+
     path('api/update-account', UpdateUserInfo),
     path('api/delete-account', DeleteAccount),
+
     path('api/password-reset-email', SendResetEmail),
     path('api/validate-token', ValidateResetToken),
     path('api/password-reset-confirm', updateUserPassword),
     path('oauth2callback', oauth2callback),
+
+    path('api/save-route', SaveRoute),
+    path('api/saved-routes', SavedRoutes),
+    path('api/favorite-route', FavoriteRoute),
+    path('api/edit-route', EditRoute),
+    path('api/delete-route', DeleteRoute),
 ]
