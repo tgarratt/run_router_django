@@ -139,7 +139,7 @@ def SendResetEmail(request):
         try:
             send_email(
                 subject='Test Subject',
-                body=f'http://localhost:3000/password-reset-redirect?t={myToken}',
+                body=f'https://run-router.netlify.app/password-reset-redirect?t={myToken}',
                 to=userEmail
             )
             return HttpResponse(status=200)
@@ -156,7 +156,7 @@ def oauth2callback(request):
         os.path.join(os.path.dirname(__file__), 'credentials.json'),
         scopes=['https://www.googleapis.com/auth/gmail.send'],
         state=state)
-    flow.redirect_uri = 'http://localhost:8000/oauth2callback'
+    flow.redirect_uri = 'https://run-router-django-8d8af4387754.herokuapp.com/oauth2callback'
 
     authorization_response = request.build_absolute_uri()
     flow.fetch_token(authorization_response=authorization_response)
