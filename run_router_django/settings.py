@@ -163,7 +163,9 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS  = True
 
 CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
+
 
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'https://run-router.netlify.app', 'https://run-router-django-8d8af4387754.herokuapp.com']
